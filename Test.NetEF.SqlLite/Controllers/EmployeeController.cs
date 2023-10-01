@@ -23,5 +23,16 @@ namespace Test.NetEF.SqlLite.Controllers
             var employees = await _appDbContext.Employees.ToListAsync();
             return Ok(employees);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        {
+            var employee = await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
+            return Ok(employee);
+        }
     }
 }
